@@ -1,0 +1,33 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    restart: unless-stopped
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=pia
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=p3040880
+      - OPENVPN_PASSWORD=e3sCphqSfj
+      - SERVER_REGIONS=SE Stockholm
+      - PORT_FORWARD_ONLY=true
+      - VPN_PORT_FORWARDING=on
+      - TZ=${TZ}
+      - UPDATER_PERIOD=24h
+      - HTTPPROXY=on
+      - HTTPPROXY_PORT=8888
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+    volumes:
+      - data:/gluetun
+
+networks:
+  default:
+    external: true
+    name: backend-net
+
+volumes:
+  data:

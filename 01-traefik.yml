@@ -1,0 +1,38 @@
+services:
+  traefik:
+    image: traefik:v2.11
+    restart: unless-stopped
+    container_name: traefik
+    command: >
+      --providers.docker=true
+      --providers.docker.exposedbydefault=false
+      --entrypoints.web.address=:80
+      --entrypoints.web.forwardedheaders.trustedips=192.168.4.0/24
+      --api.dashboard=true
+      --log.level=DEBUG
+      --metrics.prometheus=true
+      --metrics.prometheus.entryPoint=metrics
+      --entryPoints.metrics.address=:8082
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=Host(`traefik-${DOCKER_REGION}.${DOCKER_INTERNAL_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+      - traefik.http.routers.dashboard.service=api@internal
+    ports:
+      - 80:80
+      - 8082:8082
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  whoami:
+    image: containous/whoami
+    restart: unless-stopped
+    container_name: whoami
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.whoami.rule=Host(`whoami-${DOCKER_REGION}.${DOCKER_INTERNAL_DOMAIN}`)
+
+networks:
+  default:
+    external: true
+    name: backend-net
+

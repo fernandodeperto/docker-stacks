@@ -1,0 +1,32 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:${QBITTORRENT_VERSION}
+    restart: unless-stopped
+    container_name: qbittorrent
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=${QBITTORRENT_TORRENTING_PORT}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${DOCKER_INTERNAL_DOMAIN}`)
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
+    volumes:
+      - ${DOCKER_VOLUMES}/qbittorrent-config:/config
+      - downloads:/downloads
+
+networks:
+  default:
+    external: true
+    name: backend-net
+
+volumes:
+  downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=truenas.lan,nolock,soft,rw"
+      device: ":/mnt/relief/qbittorrent"
+
