@@ -3,7 +3,7 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     restart: unless-stopped
     container_name: prowlarr
-    network_mode: "container:gluetun"
+    # network_mode: "container:gluetun"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
