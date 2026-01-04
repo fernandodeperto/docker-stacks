@@ -32,7 +32,6 @@ services:
       - "/var/lib/docker/:/var/lib/docker"
       - "/dev/disk/:/dev/disk"
 
-
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -47,7 +46,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.prometheus.rule=Host(`prometheus-${DOCKER_REGION}.${DOCKER_INTERNAL_DOMAIN}`)
     volumes:
-      - ${DOCKER_CONFIG}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${DOCKER_CONFIG}/prometheus:/etc/prometheus
       - prometheus_data:/prometheus
 
   alertmanager:
