@@ -1,0 +1,20 @@
+[Unit]
+Description=Docker Stacks
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+WorkingDirectory=/opt/torrent
+ExecStart=/bin/bash -c "./start-stack.sh -d $PWD/stacks up"
+ExecStop=/bin/bash -c "./start-stack.sh -d $PWD/stacks down"
+
+[Install]
+WantedBy=multi-user.target
+
