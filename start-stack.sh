@@ -82,7 +82,7 @@ parse_params() {
   case "${args[0]}" in
     up)
       ls="ls"
-      command="up -d"
+      command="up -d -y --remove-orphans"
       ;;
     down)
       ls="ls -r"
@@ -108,8 +108,8 @@ parse_params "$@"
 setup_colors
 show_params
 
-for compose in $($ls $stack); do
-  project="${PWD##*/}-$(echo "$compose" | sed -E 's/^[0-9]+-(.*)\.yml/\1/')"
+for compose in $($ls ${dir}/${stack}); do
+  project="${PWD##*/}-$(basename "$compose" | sed -E 's/^[0-9]+-(.*)-compose\.yml/\1/')"
   docker compose -p "$project" -f "$compose" $command
 done
 

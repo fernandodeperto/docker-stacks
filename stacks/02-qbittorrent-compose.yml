@@ -28,5 +28,5 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=truenas.lan,nolock,soft,rw"
-      device: ":/mnt/relief/qbittorrent"
+      device: ":/mnt/cosmere/qbittorrent"
 
