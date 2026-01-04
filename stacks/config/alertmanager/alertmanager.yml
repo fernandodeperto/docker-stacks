@@ -1,0 +1,12 @@
+global:
+  resolve_timeout: 3m
+
+receivers:
+- name: 'null'
+
+route:
+  group_by:
+  - group
+  - host
+  receiver: 'null'
+
