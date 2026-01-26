@@ -11,7 +11,7 @@ services:
       - VPN_SERVICE_PROVIDER=pia
       - VPN_TYPE=openvpn
       - OPENVPN_USER=p3040880
-      - OPENVPN_PASSWORD=e3sCphqSfj
+      - OPENVPN_PASSWORD=PASSWORD
       - SERVER_REGIONS=SE Stockholm
       - PORT_FORWARD_ONLY=true
       - VPN_PORT_FORWARDING=on
