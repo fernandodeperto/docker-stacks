@@ -11,14 +11,15 @@ services:
       - VPN_SERVICE_PROVIDER=pia
       - VPN_TYPE=openvpn
       - OPENVPN_USER=p3040880
-      - OPENVPN_PASSWORD=PASSWORD
-      - SERVER_REGIONS=SE Stockholm
+      - OPENVPN_PASSWORD=e3sCphqSfj
+      - SERVER_REGIONS=${GLUETUN_SERVER_REGIONS}
       - PORT_FORWARD_ONLY=true
       - VPN_PORT_FORWARDING=on
       - TZ=${TZ}
       - UPDATER_PERIOD=24h
       - HTTPPROXY=on
       - HTTPPROXY_PORT=8888
+      - DNS_UPSTREAM_RESOLVERS=quad9
     ports:
       - 8888:8888/tcp # HTTP proxy
     volumes:

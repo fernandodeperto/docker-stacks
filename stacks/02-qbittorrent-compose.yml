@@ -27,6 +27,6 @@ volumes:
   downloads:
     driver_opts:
       type: "nfs"
-      o: "addr=truenas.lan,nolock,soft,rw"
-      device: ":/mnt/cosmere/qbittorrent"
+      o: "addr=zfs.lan,nolock,soft,rw"
+      device: ":/mnt/elantris/qbittorrent"
 
